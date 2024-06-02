@@ -8,7 +8,6 @@ st.set_page_config(
     page_title="Employee Attrition Prediction",
     page_icon="🧑‍💼",
     layout="centered",
-    initial_sidebar_state="expanded", 
 )
 
 # Define the model version
