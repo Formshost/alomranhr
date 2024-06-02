@@ -9,7 +9,6 @@ st.set_page_config(
     page_icon="🧑‍💼",
     layout="centered",
     initial_sidebar_state="expanded", 
-    theme="light"  # This line sets the theme to light
 )
 
 # Define the model version
