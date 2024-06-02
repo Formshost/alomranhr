@@ -8,7 +8,6 @@ st.set_page_config(
     page_title="Employee Attrition Prediction",
     page_icon="🧑‍💼",
     layout="centered",
-    theme="light"  # This line sets the theme to light
 )
 
 # Define the model version
