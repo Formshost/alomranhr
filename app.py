@@ -31,6 +31,16 @@ st.info(
 st.title('Employee Attrition Prediction')
 st.markdown("Provide employee details to predict attrition.")
 
+# Add a red warning message at the top
+st.markdown(
+    """
+    <div style="color:red; font-size:20px;">
+        If you need assistance, please click on the assistant button.
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 # Auto-expand sidebar code
 st.markdown(
     """
