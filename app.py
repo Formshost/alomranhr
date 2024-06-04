@@ -3,11 +3,12 @@ import pandas as pd
 import joblib
 from model import predict, predict_proba  # Ensure these functions handle DataFrame input
 
-# Explicitly set the theme configuration
+# set the theme configuration
 st.set_page_config(
     page_title="Employee Attrition Prediction",
     page_icon="🧑‍💼",
     layout="centered",
+    initial_sidebar_state="expanded",
 )
 
 # Define the model version
@@ -21,34 +22,22 @@ model = joblib.load(model_path)
 logo_path = 'logo.png'  # Replace with the actual path to your logo image
 st.image(logo_path, use_column_width=False, width=250)  # Adjust the logo size here
 
-# Sidebar for About Information
+# About Information
 st.header('About This App')
 st.info(
-    "This innovative application, enhanced with constant updates, uses artificial intelligence to predict the likelihood of an employee leaving the company based on historical data. Adjust the settings and input data to receive accurate predictions on employee attrition."
+    "This innovative application, enhanced with constant updates, uses machine learning&LLM to predict the likelihood of an employee leaving the company based on historical data. Adjust the settings and input data to receive accurate predictions on employee attrition."
 )
 
 # Page Title
 st.title('Employee Attrition Prediction')
 st.markdown("Provide employee details to predict attrition.")
 
-# Add a red warning message at the top
+# for help 
 st.markdown(
     """
-    <div style="color:red; font-size:20px;">
-        If you need assistance, please click on the assistant button.
+    <div style="text-align: center; font-size: 15px; color: red;">
+       For Input Descriptions- Click the question mark: <span style="color: black;">?</span>
     </div>
-    """,
-    unsafe_allow_html=True
-)
-
-# Auto-expand sidebar code
-st.markdown(
-    """
-    <style>
-        [data-testid="stSidebar"][aria-expanded="false"] > div:first-child {
-            width: 100%;
-        }
-    </style>
     """,
     unsafe_allow_html=True
 )
@@ -85,7 +74,7 @@ with st.form("attrition_form"):
     marital_status = st.selectbox("", ['Single', 'Married', 'Divorced'], key='marital_status', help="Select the marital status.")
 
     st.markdown("Monthly Income")
-    monthly_income = st.number_input("", min_value=0, key='monthly_income', help="Enter the monthly income in dollars.")
+    monthly_income = st.number_input("", min_value=0, key='monthly_income', help="Enter the monthly income in dollars It must be more than $500 . ")
 
     st.markdown("Number of Companies Worked")
     num_companies_worked = st.number_input("", min_value=0, key='num_companies_worked', help="Enter the total number of companies worked at.")
@@ -130,58 +119,77 @@ with st.form("attrition_form"):
 
 # Handling form submission
 if submit_button:
-    # Create a DataFrame to hold the user input data
-    input_data = pd.DataFrame({
-        'Age': [age], 'BusinessTravel': [business_travel],
-        'DistanceFromHome': [distance_from_home], 'Education': [education],
-        'Gender': [gender], 'JobLevel': [job_level],  # Corrected from 'Job Level'
-        'JobSatisfaction': [job_satisfaction], 'EnvironmentSatisfaction': [environment_satisfaction],  # Corrected from 'Environment Satisfaction'
-        'MaritalStatus': [marital_status], 'MonthlyIncome': [monthly_income],
-        'NumCompaniesWorked': [num_companies_worked], 'OverTime': [over_time],
-        'PercentSalaryHike': [percent_salary_hike], 'PerformanceRating': [performance_rating],
-        'RelationshipSatisfaction': [relationship_satisfaction], 'StockOptionLevel': [stock_option_level],
-        'TotalWorkingYears': [total_working_years], 'TrainingTimesLastYear': [training_times_last_year],
-        'WorkLifeBalance': [work_life_balance], 'YearsAtCompany': [years_at_company], 'YearsInCurrentRole': [years_in_current_role],
-        'YearsSinceLastPromotion': [years_since_last_promotion], 'YearsWithCurrManager': [years_with_curr_manager]
-    })
+    errors = []
+    
+    # Check for specific validation rules 
+    if age < 18 or age > 70:
+        errors.append("Age must be between 18 and 70.")
+    if distance_from_home < 0:
+        errors.append("Distance from home cannot be negative.")
+    if monthly_income < 500:
+        errors.append("Monthly income cannot be negative.")
+    if percent_salary_hike < 0 or percent_salary_hike > 100:
+        errors.append("Percent salary hike must be between 0 and 100.")
+    if total_working_years < 0:
+        errors.append("Total working years cannot be negative.")
+    if years_at_company < 0:
+        errors.append("Years at company cannot be negative.")
+    if years_in_current_role < 0:
+        errors.append("Years in current role cannot be negative.")
+    if years_since_last_promotion < 0:
+        errors.append("Years since last promotion cannot be negative.")
+    if years_with_curr_manager < 0:
+        errors.append("Years with current manager cannot be negative.")
 
-    # Display a spinner while the model is making predictions
-    with st.spinner('Making prediction...'):
-        # Simulate a delay to control the duration of the spinner
-        # This will pause the execution for 2 seconds
-        # For a real application, you would perform the prediction here
-        # and not use time.sleep() as it would block the app
-        # import time
-        # time.sleep(2)
-
-        # Make predictions
-        predictions = model.predict(input_data)
-        probabilities = model.predict_proba(input_data)[:, 1]
-        result = "Likely to leave" if predictions[0] == 1 else "Likely to stay"
-        probability = probabilities[0]
-
-    # Display the result
-    st.subheader("Prediction Result")
-    if result == "Likely to leave":
-        st.error(f"🚨 {result} 🚨")
+    if errors:
+        for error in errors:
+            st.error(error)
     else:
-        st.success(result)
+        # Create a DataFrame to hold the user input data
+        input_data = pd.DataFrame({
+            'Age': [age], 'BusinessTravel': [business_travel],
+            'DistanceFromHome': [distance_from_home], 'Education': [education],
+            'Gender': [gender], 'JobLevel': [job_level],
+            'JobSatisfaction': [job_satisfaction], 'EnvironmentSatisfaction': [environment_satisfaction],
+            'MaritalStatus': [marital_status], 'MonthlyIncome': [monthly_income],
+            'NumCompaniesWorked': [num_companies_worked], 'OverTime': [over_time],
+            'PercentSalaryHike': [percent_salary_hike], 'PerformanceRating': [performance_rating],
+            'RelationshipSatisfaction': [relationship_satisfaction], 'StockOptionLevel': [stock_option_level],
+            'TotalWorkingYears': [total_working_years], 'TrainingTimesLastYear': [training_times_last_year],
+            'WorkLifeBalance': [work_life_balance], 'YearsAtCompany': [years_at_company], 'YearsInCurrentRole': [years_in_current_role],
+            'YearsSinceLastPromotion': [years_since_last_promotion], 'YearsWithCurrManager': [years_with_curr_manager]
+        })
 
-    # Display the probability
-    st.subheader(f"Probability: {probability:.2%}")
-    st.progress(probability)
+        # Display a spinner while the model is making predictions
+        with st.spinner('Making prediction...'):
+            # Make predictions
+            predictions = model.predict(input_data)
+            probabilities = model.predict_proba(input_data)[:, 1]
+            result = "Likely to leave" if predictions[0] == 1 else "Likely to stay"
+            probability = probabilities[0]
 
-    # Add a button to toggle the detailed explanation
-    if st.button("Show Explanation"):
-        # Determine the explanation based on the probability
-        if probability >= 0.5:
-            explanation = f"The model predicts with a high probability ({probability:.2%}) that this employee is likely to leave."
+        # Display the result
+        st.subheader("Prediction Result")
+        if result == "Likely to leave":
+            st.error(f"🚨 {result} 🚨")
         else:
-            explanation = f"The model predicts with a low probability ({probability:.2%}) that this employee is likely to stay."
+            st.success(result)
 
-        # Display the explanation
-        st.markdown(f"**Explanation:** {explanation}")
-        
+        # Display the probability
+        st.subheader(f"Probability: {probability:.2%}")
+        st.progress(probability)
+
+        # Add a button to toggle the detailed explanation
+        if st.button("Show Explanation"):
+            # Determine the explanation based on the probability
+            if probability >= 0.5:
+                explanation = f"The model predicts with a high probability ({probability:.2%}) that this employee is likely to leave."
+            else:
+                explanation = f"The model predicts with a low probability ({probability:.2%}) that this employee is likely to stay."
+
+            # Display the explanation
+            st.markdown(f"**Explanation:** {explanation}")
+
 # Add a footer with the version information
 st.markdown(
     f"""
