@@ -216,8 +216,15 @@ if submit_button:
 
             # Display the explanation
             st.markdown(f"**Explanation:** {explanation}")
-# Display the submission count
-st.markdown(f"**Sub:** {submission_count}")
+# Display the submission count in white color
+st.sidebar.markdown(
+    f"""
+    <div style="color: white;">
+        <strong>FSub:</strong> {submission_count}
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 # Add a footer with the version information
 st.markdown(
