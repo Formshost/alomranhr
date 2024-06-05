@@ -11,6 +11,7 @@ st.set_page_config(
     layout="centered",
     initial_sidebar_state="expanded",
 )
+
 # Custom CSS to hide the GitHub icon
 hide_github_icon = """
     <style>
