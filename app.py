@@ -36,7 +36,7 @@ st.markdown("Provide employee details to predict attrition.")
 # for help 
 st.markdown(
     """
-    <div style="text-align: center; font-size: 15px; color: red;">
+    <div style="text-align: center; font-size: 15px; color: blue;">
        For Input Descriptions- Click the question mark: <span style="color: black;">?</span>
     </div>
     """,
