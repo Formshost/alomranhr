@@ -15,10 +15,7 @@ st.set_page_config(
 # Custom CSS to hide the "Fork" button and GitHub icon
 hide_streamlit_style = """
     <style>
-        .viewerBadge_container__1QSob { display: none !important; }
-        .viewerBadge_link__1S137 { display: none !important; }
-        .viewerBadge_githubIcon__1JqB2 { display: none !important; }
-        .viewerBadge_container__2GSZk { display: none !important; }
+        .stApp header {display: none !important;}
     </style>
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
