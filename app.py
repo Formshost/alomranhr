@@ -12,10 +12,11 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# Custom CSS to hide the "Fork" button and GitHub icon
+# Custom CSS to hide the "Fork" button, GitHub icon, and "Hosted with Streamlit" footer
 hide_streamlit_style = """
     <style>
         .stApp header {display: none !important;}
+        footer {visibility: hidden;}
     </style>
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
