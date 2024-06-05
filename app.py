@@ -11,6 +11,13 @@ st.set_page_config(
     layout="centered",
     initial_sidebar_state="expanded",
 )
+# Custom CSS to hide the GitHub icon
+hide_github_icon = """
+    <style>
+        .viewerBadge_container__1QSob { display: none; }
+    </style>
+"""
+st.markdown(hide_github_icon, unsafe_allow_html=True)
 
 # Define the model version
 model_version = '1.0'  # You can change this as needed
