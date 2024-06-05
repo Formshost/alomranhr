@@ -12,13 +12,16 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# Custom CSS to hide the GitHub icon
-hide_github_icon = """
+# Custom CSS to hide the "Fork" button and GitHub icon
+hide_streamlit_style = """
     <style>
-        .viewerBadge_container__1QSob { display: none; }
+        .viewerBadge_container__1QSob { display: none !important; }
+        .viewerBadge_link__1S137 { display: none !important; }
+        .viewerBadge_githubIcon__1JqB2 { display: none !important; }
+        .viewerBadge_container__2GSZk { display: none !important; }
     </style>
 """
-st.markdown(hide_github_icon, unsafe_allow_html=True)
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 # Define the model version
 model_version = '1.0'  # You can change this as needed
