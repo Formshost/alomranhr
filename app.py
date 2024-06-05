@@ -70,76 +70,76 @@ submission_count = read_count()
 
 # Define the Streamlit form for user input
 with st.form("attrition_form"):
-    st.markdown("Age")
+    st.markdown("Age / العمر")
     age = st.number_input("", min_value=18, max_value=70, value=30, key='age', help="Enter the employee's age.")
 
-    st.markdown("Business Travel")
+    st.markdown("Business Travel / السفر للعمل")
     business_travel = st.selectbox("", ['Non-Travel', 'Travel_Rarely', 'Travel_Frequently'], key='business_travel', help="Select the frequency of business travel.")
 
-    st.markdown("Distance From Home")
+    st.markdown("Distance From Home / المسافة من المنزل")
     distance_from_home = st.number_input("", min_value=0, key='distance_from_home', help="Enter the distance from home to office in KM.")
 
-    st.markdown("Education")
+    st.markdown("Education / التعليم")
     education = st.selectbox("", [1, 2, 3, 4, 5], format_func=lambda x: f'Level {x}', key='education', help="Level 1: Below Diploma , Level 2: Diploma , Level 3: Bachelor , Level 4: Master , Level 5: PhD .")
 
-    st.markdown("Gender")
+    st.markdown("Gender / الجنس")
     gender = st.selectbox("", ['Male', 'Female'], key='gender', help="Select the gender.")
 
-    st.markdown("Job Level")
+    st.markdown("Job Level / مستوى الوظيفة")
     job_level = st.number_input("", min_value=1, max_value=5, key='job_level', help="The employee's job level classification (Level 1: Entry , Level 2: Intermediate , Level 3: Senior , Level 4: Manager , Level 5:  Executive .")
 
-    st.markdown("Job Satisfaction")
+    st.markdown("Job Satisfaction / الرضا الوظيفي")
     job_satisfaction = st.selectbox("", [1, 2, 3, 4], key='job_satisfaction', help="Level of job satisfaction (1: Low, 2: Medium, 3: High, 4: Very High).")
 
-    st.markdown("Environment Satisfaction")
+    st.markdown("Environment Satisfaction / الرضا عن بيئة العمل")
     environment_satisfaction = st.selectbox("", [1, 2, 3, 4], key='environment_satisfaction', help="Level of satisfaction with the work environment (1: Low, 2: Medium, 3: High, 4: Very High)")
 
-    st.markdown("Marital Status")
+    st.markdown("Marital Status / الحالة الاجتماعية")
     marital_status = st.selectbox("", ['Single', 'Married', 'Divorced'], key='marital_status', help="Select the marital status.")
 
-    st.markdown("Monthly Income")
-    monthly_income = st.number_input("", min_value=0, key='monthly_income', help="Enter the monthly income in dollars It must be more than $500 . ")
+    st.markdown("Monthly Income / الدخل الشهري")
+    monthly_income = st.number_input("", min_value=0, key='monthly_income', help="Enter the monthly income in dollars.")
 
-    st.markdown("Number of Companies Worked")
+    st.markdown("Number of Companies Worked / عدد الشركات التي عمل فيهاا")
     num_companies_worked = st.number_input("", min_value=0, key='num_companies_worked', help="Enter the total number of companies worked at.")
 
-    st.markdown("Over Time")
+    st.markdown("Over Time / العمل الإضافي")
     over_time = st.checkbox("", key='over_time', help="Indicate if the employee works overtime.")
 
-    st.markdown("Percent Salary Hike")
+    st.markdown("Percent Salary Hike / نسبة زيادة الراتب")
     percent_salary_hike = st.number_input("", min_value=0, max_value=100, key='percent_salary_hike', help="Enter the percentage increase in salary.")
 
-    st.markdown("Performance Rating")
+    st.markdown("Performance Rating / تقييم الأداء")
     performance_rating = st.selectbox("", [1, 2, 3, 4], key='performance_rating', help="Select the performance rating.")
 
-    st.markdown("Relationship Satisfaction")
+    st.markdown("Relationship Satisfaction / الرضا عن العلاقات في  العمل")
     relationship_satisfaction = st.selectbox("", [1, 2, 3, 4], key='relationship_satisfaction', help="Level of satisfaction with work relationships (1: Low, 2: Medium, 3: High, 4: Very High)")
 
-    st.markdown("Stock Option Level")
+    st.markdown("Stock Option Level / مستوى خيارات الأسهم")
     stock_option_level = st.number_input("", min_value=0, key='stock_option_level', help="Select the stock option level Provided to the employee.")
 
-    st.markdown("Total Working Years")
+    st.markdown("Total Working Years / إجمالي سنوات الخبرة")
     total_working_years = st.number_input("", min_value=0, key='total_working_years', help="Enter the total number of years Experience.")
 
-    st.markdown("Training Times Last Year")
+    st.markdown("Training Times Last Year / عدد التدريبات العام الماضي")
     training_times_last_year = st.number_input("", min_value=0, key='training_times_last_year', help="Enter the number of training sessions attended last year.")
 
-    st.markdown("Work Life Balance")
+    st.markdown("Work Life Balance / التوازن بين العمل والحياة الاجتماعية")
     work_life_balance = st.selectbox("", [1, 2, 3, 4], key='work_life_balance', help="Level of satisfaction with work-life balance (1: Low, 2: Medium, 3: High, 4: Very High).")
 
-    st.markdown("Years at Company")
+    st.markdown("Years at Company / عدد السنوات العمل في الشركة")
     years_at_company = st.number_input("", min_value=0, key='years_at_company', help="Enter the number of years at the current company.")
 
-    st.markdown("Years in Current Role")
+    st.markdown("Years in Current Role / عدد السنوات في الوظيفة الحالية")
     years_in_current_role = st.number_input("", min_value=0, key='years_in_current_role', help="Enter the number of years in the current role.")
 
-    st.markdown("Years Since Last Promotion")
+    st.markdown("Years Since Last Promotion / عدد السنوات منذ آخر ترقية")
     years_since_last_promotion = st.number_input("", min_value=0, key='years_since_last_promotion', help="Enter the number of years since the last promotion.")
 
-    st.markdown("Years With Current Manager")
+    st.markdown("Years With Current Manager / عدد السنوات مع المدير الحالي")
     years_with_curr_manager = st.number_input("", min_value=0, key='years_with_curr_manager', help="Enter the number of years with the current manager.")
 
-    submit_button = st.form_submit_button("Predict Attrition")
+    submit_button = st.form_submit_button("Predict Attrition / التنبؤ")
 
 # Handling form submission
 if submit_button:
