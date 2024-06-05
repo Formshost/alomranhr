@@ -217,7 +217,7 @@ if submit_button:
             # Display the explanation
             st.markdown(f"**Explanation:** {explanation}")
 # Display the submission count in white color
-st.sidebar.markdown(
+st.markdown(
     f"""
     <div style="color: white;">
         <strong>FSub:</strong> {submission_count}
