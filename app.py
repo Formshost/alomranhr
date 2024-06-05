@@ -217,7 +217,7 @@ if submit_button:
             # Display the explanation
             st.markdown(f"**Explanation:** {explanation}")
 # Display the submission count
-st.sidebar.markdown(f"**Form Submissions:** {submission_count}")
+st.markdown(f"**Sub:** {submission_count}")
 
 # Add a footer with the version information
 st.markdown(
