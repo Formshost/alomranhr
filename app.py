@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import joblib
+import os
 from model import predict, predict_proba  # Ensure these functions handle DataFrame input
 
 # set the theme configuration
