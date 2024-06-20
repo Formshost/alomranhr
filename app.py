@@ -109,7 +109,7 @@ with st.form("attrition_form"):
     st.markdown("Monthly Income / الدخل الشهري")
     monthly_income = st.number_input("", min_value=0, key='monthly_income', help="Enter the monthly income in dollars.")
 
-    st.markdown("Number of Companies Worked / عدد الشركات التي عمل فيهاا")
+    st.markdown("Number of Companies Worked / عدد الشركات التي عمل معها")
     num_companies_worked = st.number_input("", min_value=0, key='num_companies_worked', help="Enter the total number of companies worked at.")
 
     st.markdown("Over Time / العمل الإضافي")
@@ -130,13 +130,13 @@ with st.form("attrition_form"):
     st.markdown("Total Working Years / إجمالي سنوات الخبرة")
     total_working_years = st.number_input("", min_value=0, key='total_working_years', help="Enter the total number of years Experience.")
 
-    st.markdown("Training Times Last Year / عدد التدريبات العام الماضي")
+    st.markdown("Training Times Last Year / عدد التدريبات في العام الماضي")
     training_times_last_year = st.number_input("", min_value=0, key='training_times_last_year', help="Enter the number of training sessions attended last year.")
 
     st.markdown("Work Life Balance / التوازن بين العمل والحياة الاجتماعية")
     work_life_balance = st.selectbox("", [1, 2, 3, 4], key='work_life_balance', help="Level of satisfaction with work-life balance (1: Low, 2: Medium, 3: High, 4: Very High).")
 
-    st.markdown("Years at Company / عدد السنوات العمل في الشركة")
+    st.markdown("Years at Company / عدد سنوات العمل في الشركة")
     years_at_company = st.number_input("", min_value=0, key='years_at_company', help="Enter the number of years at the current company.")
 
     st.markdown("Years in Current Role / عدد السنوات في الوظيفة الحالية")
