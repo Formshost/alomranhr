@@ -28,12 +28,12 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 # Add Google Analytics tracking code
 ga_tracking_code = """
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-CK0F15Q5RC"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=GT-NCLQ5ZJ8"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-gtag('config', 'G-CK0F15Q5RC');
+gtag('config', 'GT-NCLQ5ZJ8');
 </script>
 """
 
