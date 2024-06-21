@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          persist-credentials: false # This ensures credentials are not persisted
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -24,6 +26,8 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run Google Analytics injection script
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           chmod -R 777 /home/runner/work/alomranhr/alomranhr
           python add_ga.py
