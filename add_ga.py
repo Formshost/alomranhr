@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import pathlib
 import shutil
-import streamlit as st
+import os
 
 GA_ID = "google_analytics"
 GA_SCRIPT = """
@@ -44,6 +44,13 @@ def inject_ga():
         with open(index_path, 'r') as file:
             confirmed_content = file.read()
             print(f"Confirmed HTML after injection: {confirmed_content}")
+        
+        # Add git commit and push commands here
+        os.system("git config --global user.email 'you@example.com'")
+        os.system("git config --global user.name 'Your Name'")
+        os.system("git add static/index.html")
+        os.system("git commit -m 'Add GA script to index.html'")
+        os.system("git push")
     else:
         print("GA script already present")
 
