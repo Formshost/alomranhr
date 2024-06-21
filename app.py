@@ -5,10 +5,6 @@ import os
 from model import predict, predict_proba  # Ensure these functions handle DataFrame input
 import streamlit.components.v1 as components
 
-# Serve the custom HTML with Google Analytics
-with open(".streamlit/index.html", 'r') as f:
-    html_content = f.read()
-components.html(html_content, height=0)
 
 
 # set the theme configuration
@@ -27,6 +23,11 @@ hide_streamlit_style = """
     </style>
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
+# Serve the custom HTML with Google Analytics
+with open(".streamlit/index.html", 'r') as f:
+    html_content = f.read()
+components.html(html_content, height=0)
 
 # Define the model version
 model_version = '1.0'  # You can change this as needed
