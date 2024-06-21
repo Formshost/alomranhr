@@ -3,6 +3,8 @@ import pandas as pd
 import joblib
 import os
 from model import predict, predict_proba  # Ensure these functions handle DataFrame input
+import streamlit.components.v1 as components
+
 
 
 
@@ -22,6 +24,20 @@ hide_streamlit_style = """
     </style>
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
+# Add Google Analytics tracking code
+ga_tracking_code = """
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-11277081405"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'AW-11277081405');
+    </script>
+"""
+st.markdown(ga_tracking_code, unsafe_allow_html=True)
 
 # Define the model version
 model_version = '1.0'  # You can change this as needed
