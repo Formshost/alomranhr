@@ -33,7 +33,7 @@ ga_tracking_code = """
         gtag('config', 'G-CK0F15QSRC');
     </script>
 """
-components.html(ga_tracking_code, height=0)
+st.markdown(f'<iframe srcdoc="{ga_tracking_code}" style="display:none;"></iframe>', unsafe_allow_html=True)
 
 # Define the model version
 model_version = '1.0'  # You can change this as needed
