@@ -55,28 +55,6 @@ st.markdown(
 )
 
 
-# Function to read the count from the file
-def read_count():
-    if os.path.exists(count_file):
-        with open(count_file, 'r') as file:
-            try:
-                count = int(file.read())
-            except ValueError:
-                count = 0
-    else:
-        count = 0
-    return count
-
-
-# Function to write the count to the file
-def write_count(count):
-    with open(count_file, 'w') as file:
-        file.write(str(count))
-
-# Read the current submission count
-submission_count = read_count()
-
-
 # Define the Streamlit form for user input
 with st.form("attrition_form"):
     st.markdown("Age / العمر")
