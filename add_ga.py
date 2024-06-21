@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import pathlib
 import shutil
 import streamlit as st
+import os
 
 GA_ID = "google_analytics"
 GA_SCRIPT = """
@@ -19,9 +20,16 @@ def inject_ga():
     index_path = pathlib.Path(st.__file__).parent / "static" / "index.html"
     print(f"Index path: {index_path}")
     
+    # Print directory contents
+    parent_dir = pathlib.Path(st.__file__).parent / "static"
+    print(f"Contents of {parent_dir}: {list(parent_dir.iterdir())}")
+    
     if not index_path.exists():
         print("index.html does not exist")
         return
+    
+    # Check file permissions
+    print(f"File permissions for {index_path}: {oct(os.stat(index_path).st_mode)}")
     
     soup = BeautifulSoup(index_path.read_text(), features="html.parser")
     if not soup.find(id=GA_ID):
