@@ -24,10 +24,18 @@ hide_streamlit_style = """
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
-# Serve the custom HTML with Google Analytics
-with open(".streamlit/index.html", 'r') as f:
-    html_content = f.read()
-components.html(html_content, height=0)
+# Google Analytics tracking code
+ga_tracking_code = """
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WZGPN73NKB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WZGPN73NKB');
+</script>
+"""
+components.html(ga_tracking_code, height=0)
 
 # Define the model version
 model_version = '1.0'  # You can change this as needed
