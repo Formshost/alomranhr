@@ -36,7 +36,11 @@ def inject_ga():
         html = str(soup)
         print("Current HTML:", html)  # Print the current HTML content before modification
         
-        new_html = html.replace('<head>', '<head>\n' + GA_SCRIPT)
+        if '<head>' in html:
+            new_html = html.replace('<head>', '<head>\n' + GA_SCRIPT)
+        else:
+            new_html = GA_SCRIPT + html
+            
         print("Modified HTML:", new_html)  # Print the modified HTML content
         
         index_path.write_text(new_html)
