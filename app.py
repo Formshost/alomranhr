@@ -156,9 +156,7 @@ if submit_button:
         for error in errors:
             st.error(error)
     else:
-        # Increment the submission counter
-        submission_count += 1
-        write_count(submission_count)
+
         # Create a DataFrame to hold the user input data
         input_data = pd.DataFrame({
             'Age': [age], 'BusinessTravel': [business_travel],
