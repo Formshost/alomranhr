@@ -41,6 +41,10 @@ def inject_ga():
         
         index_path.write_text(new_html)
         print("GA script injected successfully")
+        
+        # Read back the file to confirm the changes
+        confirmed_html = index_path.read_text()
+        print("Confirmed HTML after injection:", confirmed_html)  # Confirm the changes
     else:
         print("GA script already present")
 
