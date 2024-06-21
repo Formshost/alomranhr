@@ -25,19 +25,15 @@ hide_streamlit_style = """
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
-# Add Google Analytics tracking code
-ga_tracking_code = """
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-11277081405"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-11277081405"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-        gtag('config', 'AW-11277081405');
-    </script>
-"""
-st.markdown(ga_tracking_code, unsafe_allow_html=True)
+  gtag('config', 'AW-11277081405');
+</script>
 
 # Define the model version
 model_version = '1.0'  # You can change this as needed
