@@ -35,4 +35,9 @@ jobs:
         run: python add_ga.py
 
       - name: Start Streamlit
-        run: streamlit run app.py
+        run: |
+          nohup streamlit run app.py &
+
+      - name: Post Set up Python
+        run: |
+          echo "Streamlit started in the background"
