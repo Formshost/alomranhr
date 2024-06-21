@@ -1,3 +1,16 @@
+# Add Google Analytics tracking code
+ga_tracking_code = """
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CK0F15Q5RC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-CK0F15Q5RC');
+    </script>
+"""
+
 import joblib
 
 def load_model(model_path):
