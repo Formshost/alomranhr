@@ -11,44 +11,39 @@ GA_SCRIPT = """
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-WZGPN73NKB');
 </script>
 """
 
 def inject_ga():
     index_path = pathlib.Path(__file__).parent / "static" / "index.html"
-    print(f"Index path: {index_path}")
-    
     if not index_path.exists():
         print("index.html does not exist")
         return
     
-    html_content = index_path.read_text()
-    soup = BeautifulSoup(html_content, features="html.parser")
+    print(f"Index path: {index_path}")
+    with open(index_path, 'r') as file:
+        content = file.read()
+        print(f"Current HTML: {content}")
     
+    soup = BeautifulSoup(content, 'html.parser')
     if not soup.find(id=GA_ID):
-        bck_index = index_path.with_suffix('.bck')
-        if not bck_index.exists():
-            shutil.copy(index_path, bck_index)
-        
-        print("Current HTML:", html_content)  # Print the current HTML content before modification
-        
-        if soup.head:
-            soup.head.insert(0, BeautifulSoup(GA_SCRIPT, features="html.parser"))
+        backup_path = index_path.with_suffix('.bck')
+        if backup_path.exists():
+            shutil.copy(backup_path, index_path)
         else:
-            soup.insert(0, BeautifulSoup(GA_SCRIPT, features="html.parser"))
-            
-        new_html = str(soup)
+            shutil.copy(index_path, backup_path)
         
-        print("Modified HTML:", new_html)  # Print the modified HTML content
-        
-        index_path.write_text(new_html)
+        head = soup.find('head')
+        head.insert(0, BeautifulSoup(GA_SCRIPT, 'html.parser'))
+        new_content = str(soup)
+        print(f"Modified HTML: {new_content}")
+        with open(index_path, 'w') as file:
+            file.write(new_content)
         print("GA script injected successfully")
-        
-        # Read back the file to confirm the changes
-        confirmed_html = index_path.read_text()
-        print("Confirmed HTML after injection:", confirmed_html)  # Confirm the changes
+        with open(index_path, 'r') as file:
+            confirmed_content = file.read()
+            print(f"Confirmed HTML after injection: {confirmed_content}")
     else:
         print("GA script already present")
 
