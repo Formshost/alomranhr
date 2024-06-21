@@ -33,7 +33,7 @@ ga_tracking_code = """
         gtag('config', 'G-CK0F15Q5RC');
     </script>
 """
-st.components.v1.html(ga_tracking_code)
+st.components.v1.html(ga_tracking_code, height=0)
 
 # Define the model version
 model_version = '1.0'  # You can change this as needed
