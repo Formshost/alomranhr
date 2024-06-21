@@ -24,19 +24,6 @@ hide_streamlit_style = """
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
-# Google Analytics tracking code
-ga_tracking_code = """
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-WZGPN73NKB"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'GT-WB74Z346');
-</script>
-"""
-components.html(ga_tracking_code, height=0)
-
 # Define the model version
 model_version = '1.0'  # You can change this as needed
 
