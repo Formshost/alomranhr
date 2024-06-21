@@ -32,7 +32,7 @@ ga_tracking_code = """
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-WZGPN73NKB');
+  gtag('config', 'GT-WB74Z346');
 </script>
 """
 components.html(ga_tracking_code, height=0)
