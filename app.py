@@ -24,16 +24,16 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 # Add Google Analytics tracking code
 ga_tracking_code = """
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CK0F15Q5RC"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CK0F15QSRC"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
-        gtag('config', 'G-CK0F15Q5RC');
+        gtag('config', 'G-CK0F15QSRC');
     </script>
 """
-st.components.v1.html(ga_tracking_code, height=0)
+components.html(ga_tracking_code, height=0)
 
 # Define the model version
 model_version = '1.0'  # You can change this as needed
