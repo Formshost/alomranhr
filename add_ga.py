@@ -3,15 +3,15 @@ import pathlib
 import shutil
 import streamlit as st
 
-GA_ID = "G-WZGPN73NKB"  # Replace with your actual Measurement ID
-GA_SCRIPT = f"""
+GA_ID = "google_analytics"
+GA_SCRIPT = """
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id={GA_ID}"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WZGPN73NKB"></script>
 <script id='google_analytics'>
   window.dataLayer = window.dataLayer || [];
-  function gtag(){{dataLayer.push(arguments);}}
+  function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', '{GA_ID}');
+  gtag('config', 'G-WZGPN73NKB');
 </script>
 """
 
