@@ -32,10 +32,9 @@ ga_tracking_code = """
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-WZGPN73NKB');
 </script>
-
+"""
 components.html(ga_tracking_code, height=0)
 
 # Define the model version
