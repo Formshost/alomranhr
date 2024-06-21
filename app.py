@@ -35,7 +35,7 @@ ga_tracking_code = """
         gtag('config', 'AW-11277081405');
     </script>
 """
-components.html(ga_tracking_code, height=0)
+st.markdown(ga_tracking_code, unsafe_allow_html=True)
 
 
 # Define the model version
