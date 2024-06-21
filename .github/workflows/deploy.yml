@@ -10,9 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Set up job
-        run: echo "Setting up job"
-
       - name: Checkout code
         uses: actions/checkout@v2
 
@@ -30,6 +27,7 @@ jobs:
         run: |
           chmod -R 777 /home/runner/work/alomranhr/alomranhr
           python add_ga.py
+          echo "Content of index.html after script execution:"
           cat static/index.html
 
       - name: Start Streamlit
@@ -47,6 +45,3 @@ jobs:
               sleep 10
             fi
           done
-
-      - name: Verify Google Tag
-        run: curl -s -o /dev/null -w "%{http_code}" http://localhost:8501 | grep 200
