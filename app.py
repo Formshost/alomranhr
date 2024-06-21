@@ -3,6 +3,8 @@ import pandas as pd
 import joblib
 import os
 from model import predict, predict_proba  # Ensure these functions handle DataFrame input
+import streamlit.components.v1 as components
+
 
 # set the theme configuration
 st.set_page_config(
