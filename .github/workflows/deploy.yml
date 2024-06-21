@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          persist-credentials: false # This ensures credentials are not persisted
+          persist-credentials: false
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -27,12 +27,17 @@ jobs:
 
       - name: Run Google Analytics injection script
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT }}
         run: |
           chmod -R 777 /home/runner/work/alomranhr/alomranhr
           python add_ga.py
           echo "Content of index.html after script execution:"
           cat static/index.html
+          git config --global user.email "you@example.com"
+          git config --global user.name "Your Name"
+          git add static/index.html
+          git commit -m 'Add GA script to index.html'
+          git push https://${{ secrets.PAT }}@github.com/<Formshost>/<alomranhr>.git HEAD:main
 
       - name: Start Streamlit
         run: |
