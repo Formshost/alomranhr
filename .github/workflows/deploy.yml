@@ -1,56 +1,52 @@
 name: Deploy Streamlit App with Google Analytics
 
-on:
-  push:
-    branches:
-      - main
+on: push
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-        with:
-          persist-credentials: false
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.8'
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
 
-      - name: Run Google Analytics injection script
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
-        run: |
-          chmod -R 777 /home/runner/work/alomranhr/alomranhr
-          python add_ga.py
-          echo "Content of index.html after script execution:"
-          cat static/index.html
-          git config --global user.email "you@example.com"
-          git config --global user.name "Your Name"
-          git add static/index.html
-          git commit -m 'Add GA script to index.html'
-          git push https://${{ secrets.PAT }}@github.com/<Formshost>/<alomranhr>.git HEAD:main
+    - name: Run Google Analytics injection script
+      run: |
+        chmod -R 777 /home/runner/work/alomranhr/alomranhr
+        python add_ga.py
+        echo "Content of index.html after script execution:"
+        cat static/index.html
 
-      - name: Start Streamlit
-        run: |
-          nohup streamlit run app.py &
+    - name: Commit and Push changes
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add static/index.html
+        git commit -m "Add GA script to index.html"
+        git push https://${{ secrets.EMPLOYEE_ATTRITION_PREDICTION }}@github.com/Formshost/alomranhr.git HEAD:main
+      env:
+        GITHUB_TOKEN: ${{ secrets.PAT }}
 
-      - name: Confirm Streamlit is running
-        run: |
-          for i in {1..10}; do
-            if curl --silent --fail http://localhost:8501; then
-              echo "Streamlit started successfully."
-              break
-            else
-              echo "Waiting for Streamlit to start..."
-              sleep 10
-            fi
-          done
+    - name: Start Streamlit
+      run: nohup streamlit run app.py &
+
+    - name: Check Streamlit Status
+      run: |
+        for i in {1..10}; do
+          if curl --silent --fail http://localhost:8501; then
+            echo "Streamlit started successfully."
+            break
+          else
+            echo "Waiting for Streamlit to start..."
+            sleep 10
+          fi
+        done
