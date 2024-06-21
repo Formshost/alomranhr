@@ -31,13 +31,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Start Streamlit to generate index.html
+        run: nohup streamlit run app.py &
+        background: true
+        timeout-minutes: 1
+
+      - name: Stop Streamlit
+        run: pkill -f streamlit
+
       - name: Run Google Analytics injection script
         run: python add_ga.py
 
       - name: Start Streamlit
-        run: |
-          nohup streamlit run app.py &
-
-      - name: Post Set up Python
-        run: |
-          echo "Streamlit started in the background"
+        run: nohup streamlit run app.py &
