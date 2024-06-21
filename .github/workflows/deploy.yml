@@ -34,7 +34,7 @@ jobs:
         git commit -m "Add GA script to index.html"
         git push https://${{ secrets.EMPLOYEE_ATTRITION_PREDICTION }}@github.com/Formshost/alomranhr.git HEAD:main
       env:
-        GITHUB_TOKEN: ${{ secrets.PAT }}
+        GITHUB_TOKEN: ${{ EMPLOYEE_ATTRITION_PREDICTION }}
 
     - name: Start Streamlit
       run: nohup streamlit run app.py &
