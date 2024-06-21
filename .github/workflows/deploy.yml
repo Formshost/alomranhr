@@ -21,7 +21,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run Google Analytics injection script
-        run: python ./add_ga.py
+        run: python add_ga.py
 
       - name: Start Streamlit
         run: streamlit run app.py
