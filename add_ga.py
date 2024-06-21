@@ -23,23 +23,16 @@ def inject_ga():
         print("index.html does not exist")
         return
     
-    print("index.html found")
-    
     soup = BeautifulSoup(index_path.read_text(), features="html.parser")
-    if not soup.find(id=GA_ID): 
-        print("GA script not found, injecting...")
-        
+    if not soup.find(id=GA_ID):
         bck_index = index_path.with_suffix('.bck')
         if bck_index.exists():
-            shutil.copy(bck_index, index_path)  
+            shutil.copy(bck_index, index_path)
         else:
-            shutil.copy(index_path, bck_index)  
-        
+            shutil.copy(index_path, bck_index)
         html = str(soup)
         new_html = html.replace('<head>', '<head>\n' + GA_SCRIPT)
         index_path.write_text(new_html)
         print("GA script injected successfully")
-    else:
-        print("GA script already exists")
 
 inject_ga()
