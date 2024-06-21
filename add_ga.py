@@ -24,23 +24,23 @@ def inject_ga():
         print("index.html does not exist")
         return
     
-    soup = BeautifulSoup(index_path.read_text(), features="html.parser")
+    html_content = index_path.read_text()
+    soup = BeautifulSoup(html_content, features="html.parser")
     
     if not soup.find(id=GA_ID):
         bck_index = index_path.with_suffix('.bck')
-        if bck_index.exists():
-            shutil.copy(bck_index, index_path)
-        else:
+        if not bck_index.exists():
             shutil.copy(index_path, bck_index)
         
-        html = str(soup)
-        print("Current HTML:", html)  # Print the current HTML content before modification
+        print("Current HTML:", html_content)  # Print the current HTML content before modification
         
-        if '<head>' in html:
-            new_html = html.replace('<head>', '<head>\n' + GA_SCRIPT)
+        if soup.head:
+            soup.head.insert(0, BeautifulSoup(GA_SCRIPT, features="html.parser"))
         else:
-            new_html = GA_SCRIPT + html
+            soup.insert(0, BeautifulSoup(GA_SCRIPT, features="html.parser"))
             
+        new_html = str(soup)
+        
         print("Modified HTML:", new_html)  # Print the modified HTML content
         
         index_path.write_text(new_html)
