@@ -66,8 +66,6 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# File to store the submission count
-count_file = 'submission_count.txt'
 
 # Function to read the count from the file
 def read_count():
@@ -239,15 +237,6 @@ if submit_button:
 
             # Display the explanation
             st.markdown(f"**Explanation:** {explanation}")
-# Display the submission count in white color
-st.markdown(
-    f"""
-    <div style="color: white;">
-        <strong>FSub:</strong> {submission_count}
-    </div>
-    """,
-    unsafe_allow_html=True
-)
 
 # Add a footer with the version information
 st.markdown(
