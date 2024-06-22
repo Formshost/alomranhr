@@ -37,10 +37,10 @@ jobs:
           echo "No changes to commit"
         else
           git commit -m "Add GA script to index.html"
-          git push https://x-access-token:${{ secrets.EMPLOYEE_ATTRITION_PREDICTION }}@github.com/Formshost/alomranhr.git HEAD:main
+          git push https://x-access-token:${{ secrets.EMPLOYEE_HR }}@github.com/Formshost/alomranhr.git HEAD:main
         fi
       env:
-        GITHUB_TOKEN: ${{ secrets.EMPLOYEE_ATTRITION_PREDICTION }}
+        GITHUB_TOKEN: ${{ secrets.EMPLOYEE_HR }}
 
     - name: Start Streamlit
       run: nohup streamlit run app.py &
