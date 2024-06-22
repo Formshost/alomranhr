@@ -27,6 +27,16 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 import streamlit as st
 from streamlit_analytics import StreamlitAnalytics
 
+# Initialize Streamlit Analytics with your tracking ID
+StreamlitAnalytics(
+    tracking_id="G-WZGPN73NKB",
+).start()
+
+# Your Streamlit app code goes here
+st.title("My Streamlit App")
+st.write("Hello, World!")
+
+
 
 # Your Streamlit app code goes here
 st.title("My Streamlit App")
