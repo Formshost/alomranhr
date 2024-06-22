@@ -1,13 +1,13 @@
 from bs4 import BeautifulSoup
 import pathlib
 import shutil
-import os
+import streamlit as st
 
 GA_ID = "google_analytics"
 GA_SCRIPT = """
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WZGPN73NKB"></script>
-<script id="google_analytics">
+<script id='google_analytics'>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
@@ -16,42 +16,23 @@ GA_SCRIPT = """
 """
 
 def inject_ga():
-    index_path = pathlib.Path(__file__).parent / "static" / "index.html"
-    if not index_path.exists():
-        print("index.html does not exist")
-        return
-    
+    index_path = pathlib.Path(st.__file__).parent / "static" / "index.html"
     print(f"Index path: {index_path}")
-    with open(index_path, 'r') as file:
-        content = file.read()
-        print(f"Current HTML: {content}")
+    soup = BeautifulSoup(index_path.read_text(), features="html.parser")
+    current_html = soup.prettify()
+    print(f"Current HTML: {current_html}")
     
-    soup = BeautifulSoup(content, 'html.parser')
-    if not soup.find(id=GA_ID):
-        backup_path = index_path.with_suffix('.bck')
-        if backup_path.exists():
-            shutil.copy(backup_path, index_path)
+    if not soup.find(id=GA_ID): 
+        bck_index = index_path.with_suffix('.bck')
+        if bck_index.exists():
+            shutil.copy(bck_index, index_path)  
         else:
-            shutil.copy(index_path, backup_path)
-        
-        head = soup.find('head')
-        head.insert(0, BeautifulSoup(GA_SCRIPT, 'html.parser'))
-        new_content = str(soup)
-        print(f"Modified HTML: {new_content}")
-        with open(index_path, 'w') as file:
-            file.write(new_content)
-        print("GA script injected successfully")
-        with open(index_path, 'r') as file:
-            confirmed_content = file.read()
-            print(f"Confirmed HTML after injection: {confirmed_content}")
-        
-        # Add git commit and push commands here
-        os.system("git config --global user.email 'you@example.com'")
-        os.system("git config --global user.name 'Your Name'")
-        os.system("git add static/index.html")
-        os.system("git commit -m 'Add GA script to index.html'")
-        os.system("git push")
-    else:
-        print("GA script already present")
+            shutil.copy(index_path, bck_index)  
+        new_html = str(soup).replace('<head>', '<head>\n' + GA_SCRIPT)
+        print(f"Modified HTML: {new_html}")
+        index_path.write_text(new_html)
+
+    confirmed_html = index_path.read_text()
+    print(f"Confirmed HTML after injection: {confirmed_html}")
 
 inject_ga()
