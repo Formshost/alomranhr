@@ -25,27 +25,6 @@ hide_streamlit_style = """
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
-
-# Google Analytics script
-GA_SCRIPT = """
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-CMZYYS73E2"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-CMZYYS73E2');
-</script>
-"""
-
-# Inject the Google Analytics script into the Streamlit app
-components.html(GA_SCRIPT, height=0, width=0)
-
-# Rest of your Streamlit app code
-st.title('Employee Attrition Prediction')
-# Add more Streamlit components as needed
-
-
 # Define the model version
 model_version = '1.0'  # You can change this as needed
 
