@@ -38,11 +38,6 @@ st.write("Hello, World!")
 
 
 
-# Your Streamlit app code goes here
-st.title("My Streamlit App")
-st.write("Hello, World!")
-
-
 # Define the model version
 model_version = '1.0'  # You can change this as needed
 
