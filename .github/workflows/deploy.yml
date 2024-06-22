@@ -29,6 +29,8 @@ jobs:
         cat static/index.html
 
     - name: Commit and Push changes
+      env:
+        GITHUB_TOKEN: ${{ secrets.EMPLOYEE_HR }}
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
@@ -39,8 +41,6 @@ jobs:
           git commit -m "Add GA script to index.html"
           git push https://x-access-token:${{ secrets.EMPLOYEE_HR }}@github.com/Formshost/alomranhr.git HEAD:main
         fi
-      env:
-        GITHUB_TOKEN: ${{ secrets.EMPLOYEE_HR }}
 
     - name: Start Streamlit
       run: nohup streamlit run app.py &
