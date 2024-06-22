@@ -1,4 +1,4 @@
-name: Deploy Streamlit App
+name: Deploy Streamlit app with GA
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,36 +23,31 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Ensure permissions
+    - name: Grant permission to the working directory
       run: chmod -R 777 /home/runner/work/alomranhr/alomranhr
 
-    - name: Run add_ga.py
-      run: python add_ga.py
+    - name: Inject GA script
+      run: |
+        python add_ga.py
+        echo "Content of index.html after script execution:"
+        cat static/index.html
 
-    - name: Verify changes
-      run: cat static/index.html
-
-    - name: Configure Git
+    - name: Commit and push changes
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add static/index.html
+        if ! git diff-index --quiet HEAD; then
+          git commit -m "Add GA script to index.html"
+          git push https://${{ secrets.EMPLOYEE_ATTRITION_PREDICTION }}@github.com/Formshost/alomranhr.git HEAD:main
+        else
+          echo "No changes to commit"
+        fi
+      shell: /usr/bin/bash -e {0}
+      env:
+        GITHUB_TOKEN: ${{ secrets.EMPLOYEE_ATTRITION_PREDICTION }}
 
-- name: Commit and push changes
-  run: |
-    git add static/index.html
-    if ! git diff-index --quiet HEAD; then
-      git commit -m "Add GA script to index.html"
-      git push https://${{ secrets.EMPLOYEE_ATTRITION_PREDICTION }}@github.com/Formshost/alomranhr.git HEAD:main
-    else
-      echo "No changes to commit"
-    fi
-  shell: /usr/bin/bash -e {0}
-  env:
-    GITHUB_TOKEN: ${{ secrets.EMPLOYEE_ATTRITION_PREDICTION }}
-
-
-
-    - name: Start Streamlit
+    - name: Deploy Streamlit app
       run: |
         nohup streamlit run app.py &
         for i in {1..10}; do
@@ -64,3 +59,4 @@ jobs:
             sleep 10
           fi
         done
+      shell: /usr/bin/bash -e {0}
