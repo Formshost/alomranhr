@@ -4,6 +4,7 @@ import joblib
 import os
 from model import predict, predict_proba  # Ensure these functions handle DataFrame input
 import streamlit.components.v1 as components
+from streamlit_analytics import StreamlitAnalytics
 
 
 
@@ -24,19 +25,24 @@ hide_streamlit_style = """
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
-import streamlit as st
-from streamlit_analytics import StreamlitAnalytics
+# Google Analytics tracking code
+GA_TRACKING_CODE = """
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WZGPN73NKB"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
 
-# Initialize Streamlit Analytics with your tracking ID
-StreamlitAnalytics(
-    tracking_id="G-WZGPN73NKB",
-).start()
+gtag('config', 'G-WZGPN73NKB');
+</script>
+"""
+
+# Inject Google Analytics tracking code
+st.components.v1.html(GA_TRACKING_CODE)
 
 # Your Streamlit app code goes here
 st.title("My Streamlit App")
 st.write("Hello, World!")
-
-
 
 # Define the model version
 model_version = '1.0'  # You can change this as needed
