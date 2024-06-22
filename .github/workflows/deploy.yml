@@ -37,20 +37,19 @@ jobs:
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
-    - name: Commit and push changes
-      run: |
-        git add static/index.html
-        if ! git diff-index --quiet HEAD; then
-          git commit -m "Add GA script to index.html"
-          git push https://Formshost:${{ secrets.EMPLOYEE_ATTRITION_PREDICTION }}@github.com/Formshost/alomranhr.git HEAD:main
-        else
-          echo "No changes to commit"
-        fi
-      shell: /usr/bin/bash -e {0}
-      env:
-        pythonLocation: /opt/hostedtoolcache/Python/3.8.18/x64
-        LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.8.18/x64/lib
-        GITHUB_TOKEN: ${{ secrets.EMPLOYEE_ATTRITION_PREDICTION }}
+- name: Commit and push changes
+  run: |
+    git add static/index.html
+    if ! git diff-index --quiet HEAD; then
+      git commit -m "Add GA script to index.html"
+      git push https://${{ secrets.EMPLOYEE_ATTRITION_PREDICTION }}@github.com/Formshost/alomranhr.git HEAD:main
+    else
+      echo "No changes to commit"
+    fi
+  shell: /usr/bin/bash -e {0}
+  env:
+    GITHUB_TOKEN: ${{ secrets.EMPLOYEE_ATTRITION_PREDICTION }}
+
 
 
     - name: Start Streamlit
