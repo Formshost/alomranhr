@@ -1,4 +1,4 @@
-name: Deploy Streamlit app with GA
+name: Deploy Streamlit App with Google Analytics
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,36 +19,34 @@ jobs:
         python-version: 3.8
 
     - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+      run: pip install -r requirements.txt
 
-    - name: Grant permission to the working directory
-      run: chmod -R 777 /home/runner/work/alomranhr/alomranhr
-
-    - name: Inject GA script
+    - name: Run Google Analytics injection script
       run: |
+        chmod -R 777 /home/runner/work/alomranhr/alomranhr
         python add_ga.py
         echo "Content of index.html after script execution:"
         cat static/index.html
 
-    - name: Commit and push changes
-      env:
-        GITHUB_TOKEN: ${{ secrets.EMPLOYEE_ATTRITION_PREDICTION }}
+    - name: Commit and Push changes
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
         git add static/index.html
-        if ! git diff-index --quiet HEAD; then
-          git commit -m "Add GA script to index.html"
-          git push https://x-access-token:${{ secrets.EMPLOYEE_ATTRITION_PREDICTION }}@github.com/Formshost/alomranhr.git HEAD:main
-        else
+        if git diff-index --quiet HEAD; then
           echo "No changes to commit"
+        else
+          git commit -m "Add GA script to index.html"
+          git push https://${{ secrets.EMPLOYEE_ATTRITION_PREDICTION }}@github.com/Formshost/alomranhr.git HEAD:main
         fi
+      env:
+        GITHUB_TOKEN: ${{ secrets.EMPLOYEE_ATTRITION_PREDICTION }}
 
-    - name: Deploy Streamlit app
+    - name: Start Streamlit
+      run: nohup streamlit run app.py &
+
+    - name: Check Streamlit Status
       run: |
-        nohup streamlit run app.py &
         for i in {1..10}; do
           if curl --silent --fail http://localhost:8501; then
             echo "Streamlit started successfully."
@@ -58,4 +56,3 @@ jobs:
             sleep 10
           fi
         done
-      shell: /usr/bin/bash -e {0}
