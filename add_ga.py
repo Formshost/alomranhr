@@ -18,6 +18,11 @@ GA_SCRIPT = """
 def inject_ga():
     index_path = pathlib.Path(st.__file__).parent / "static" / "index.html"
     print(f"Index path: {index_path}")
+    
+    if not index_path.exists():
+        print(f"Index file does not exist: {index_path}")
+        return
+    
     soup = BeautifulSoup(index_path.read_text(), features="html.parser")
     current_html = soup.prettify()
     print(f"Current HTML: {current_html}")
