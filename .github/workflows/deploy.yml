@@ -33,6 +33,8 @@ jobs:
         cat static/index.html
 
     - name: Commit and push changes
+      env:
+        GITHUB_TOKEN: ${{ secrets.EMPLOYEE_ATTRITION_PREDICTION }}
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
@@ -43,9 +45,6 @@ jobs:
         else
           echo "No changes to commit"
         fi
-      shell: /usr/bin/bash -e {0}
-      env:
-        GITHUB_TOKEN: ${{ secrets.EMPLOYEE_ATTRITION_PREDICTION }}
 
     - name: Deploy Streamlit app
       run: |
