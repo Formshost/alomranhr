@@ -6,17 +6,15 @@ from model import predict, predict_proba  # Ensure these functions handle DataFr
 import streamlit.components.v1 as components
 import streamlit_analytics
 
-
-
-
-# set the theme configuration
-st.set_page_config(
-    page_title="Employee Attrition Prediction",
-    page_icon="🧑‍💼",
-    layout="centered",
-    initial_sidebar_state="expanded",
-)
-
+# Start tracking
+with streamlit_analytics.track():
+    # set the theme configuration
+    st.set_page_config(
+        page_title="Employee Attrition Prediction",
+        page_icon="🧑‍💼",
+        layout="centered",
+        initial_sidebar_state="expanded",
+    )
 # Custom CSS to hide the "Fork" button, GitHub icon, and "Hosted with Streamlit" footer
 hide_streamlit_style = """
     <style>
@@ -25,8 +23,7 @@ hide_streamlit_style = """
     </style>
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
-# Start tracking
-with streamlit_analytics.track():
+
 # Define the model version
 model_version = '1.0'  # You can change this as needed
 
