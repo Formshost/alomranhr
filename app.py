@@ -42,7 +42,7 @@ gtag('config', 'G-CMZYYS73E2');
 components.html(GA_SCRIPT, height=0, width=0)
 
 # Rest of your Streamlit app code
-st.title('My Streamlit App')
+st.title('Employee Attrition Prediction')
 # Add more Streamlit components as needed
 
 
