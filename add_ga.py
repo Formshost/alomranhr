@@ -18,24 +18,29 @@ GA_SCRIPT = """
 def inject_ga():
     index_path = pathlib.Path(st.__file__).parent / "static" / "index.html"
     print(f"Index path: {index_path}")
-    
+
     if not index_path.exists():
         print(f"Index file does not exist: {index_path}")
         return
-    
+
     soup = BeautifulSoup(index_path.read_text(), features="html.parser")
     current_html = soup.prettify()
     print(f"Current HTML: {current_html}")
-    
-    if not soup.find(id=GA_ID): 
+
+    if not soup.find(id=GA_ID):
+        print("GA script not found, injecting...")
         bck_index = index_path.with_suffix('.bck')
         if bck_index.exists():
-            shutil.copy(bck_index, index_path)  
+            print(f"Backup exists, restoring: {bck_index}")
+            shutil.copy(bck_index, index_path)
         else:
-            shutil.copy(index_path, bck_index)  
+            print(f"Creating backup: {bck_index}")
+            shutil.copy(index_path, bck_index)
         new_html = str(soup).replace('<head>', '<head>\n' + GA_SCRIPT)
         print(f"Modified HTML: {new_html}")
         index_path.write_text(new_html)
+    else:
+        print("GA script already present, no need to inject.")
 
     confirmed_html = index_path.read_text()
     print(f"Confirmed HTML after injection: {confirmed_html}")
