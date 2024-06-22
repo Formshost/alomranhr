@@ -31,12 +31,12 @@ GA_SCRIPT = """
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WZGPN73NKB"></script>
 <script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-WZGPN73NKB');
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-WZGPN73NKB');
 </script>
-"""
 
 # Inject the Google Analytics script into the Streamlit app
 components.html(GA_SCRIPT, height=0, width=0)
