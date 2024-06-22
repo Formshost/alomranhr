@@ -7,8 +7,7 @@ import streamlit.components.v1 as components
 import streamlit_analytics
 
 
-# Start tracking
-with streamlit_analytics.track():
+
 
 # set the theme configuration
 st.set_page_config(
@@ -26,7 +25,8 @@ hide_streamlit_style = """
     </style>
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
-
+# Start tracking
+with streamlit_analytics.track():
 # Define the model version
 model_version = '1.0'  # You can change this as needed
 
