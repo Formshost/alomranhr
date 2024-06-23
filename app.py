@@ -37,7 +37,15 @@ inject_plausible()
 
 # Function to track prediction click
 def track_prediction_click():
-    components.html("trackPredictionClick()")
+    components.html(
+        """
+        <script>
+        trackPredictionClick();
+        </script>
+        """,
+        height=0,
+        width=0,
+    )
 
 # Define the model version
 model_version = '1.0'  # You can change this as needed
