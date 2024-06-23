@@ -141,13 +141,13 @@ with st.form("attrition_form"):
     years_with_curr_manager = st.number_input("", min_value=0, key='years_with_curr_manager', help="Enter the number of years with the current manager.")
 
     submit_button = st.form_submit_button("Predict Attrition")
+     if st.button("Predict Attrition", on_click=lambda: components.html("trackPredictionClick()")):   
 
 # Handling form submission
 if submit_button:
     errors = []
     
     # Check for specific validation rules
-    if st.button("Predict Attrition", on_click=lambda: components.html("trackPredictionClick()")):   
     if age < 18 or age > 70:
         errors.append("Age must be between 18 and 70.")
     if distance_from_home < 0:
