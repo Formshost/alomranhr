@@ -25,21 +25,12 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 #javaScript snippet for Plausible analysis 
 def inject_plausible():
-    plausible_script = """
-    <script>
-    (function() {
-        window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) };
-        var d = document, s = d.createElement('script');
-        s.src = 'https://plausible.io/js/script.js';
-        s.async = true;
-        s.defer = true;
-        s.dataset.domain = 'alomranhr.streamlit.app';
-        d.head.appendChild(s);
-        console.log('Plausible script injected');
-    })();
-    </script>
-    """
-    st.components.v1.html(plausible_script, height=0)
+    st.components.v1.html(
+        """
+        <script defer data-domain="alomranhr.streamlit.app" src="https://plausible.io/js/script.js"></script>
+        """,
+        height=0
+    )
 # Call this function at the very beginning of your app
 inject_plausible()
 
@@ -172,7 +163,14 @@ with st.form("attrition_form"):
 
 # Handling submission form
 if submit_button:
-    track_prediction_click()  # Track the prediction click
+        st.components.v1.html(
+        """
+        <script>
+        plausible('Predict Attrition');
+        </script>
+        """,
+        height=0
+    )
     errors = []
     # Check for specific validation rules
     if age < 18 or age > 70:
