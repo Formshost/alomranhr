@@ -9,18 +9,21 @@ import streamlit.components.v1 as components
 def inject_ga():
     GA_ID = "G-CMZYYS73E2"
     
-    GA_JS = f"""
-    <!-- Google Analytics -->
+    ga_js = f"""
+    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={GA_ID}"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){{dataLayer.push(arguments);}}
-        gtag('js', new Date());
-        gtag('config', '{GA_ID}');
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){{dataLayer.push(arguments);}}
+      gtag('js', new Date());
+      gtag('config', '{GA_ID}');
     </script>
     """
     
-    st.markdown(GA_JS, unsafe_allow_html=True)
+    components.html(ga_js, height=0)
+
+# Call this at the very beginning of your app
+inject_ga()
 
 # set the theme configuration
 st.set_page_config(
