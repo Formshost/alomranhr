@@ -23,11 +23,9 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 #javaScript snippet for Plausible analysis 
 def inject_plausible():
     plausible_script = """
-    <script defer data-domain="alomranhr.streamlit.app" src="https://plausible.io/js/script.js"></script>
+    <script defer data-domain="alomranhr.streamlit.app" src="https://plausible.io/js/plausible.js"></script>
     <script>
-    function trackPredictionClick() {
-        plausible('Predict Attrition');
-    }
+    window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }
     </script>
     """
     components.html(plausible_script, height=0)
