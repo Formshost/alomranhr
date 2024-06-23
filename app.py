@@ -22,8 +22,7 @@ hide_streamlit_style = """
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
-# Call this function at the very beginning of your app
-inject_plausible()
+
 #javaScript snippet for Plausible analysis 
 def inject_plausible():
     plausible_script = """
