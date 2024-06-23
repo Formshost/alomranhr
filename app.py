@@ -145,7 +145,6 @@ with st.form("attrition_form"):
 
 def track_prediction_click():
     components.html("trackPredictionClick()")
-track_prediction_click()
 
 # Handling form submission
 if submit_button:
