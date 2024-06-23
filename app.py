@@ -6,24 +6,6 @@ from model import predict, predict_proba  # Ensure these functions handle DataFr
 import streamlit.components.v1 as components
 
 
-def inject_ga():
-    GA_ID = "G-CMZYYS73E2"
-    
-    ga_js = f"""
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id={GA_ID}"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){{dataLayer.push(arguments);}}
-      gtag('js', new Date());
-      gtag('config', '{GA_ID}');
-    </script>
-    """
-    
-    components.html(ga_js, height=0)
-
-# Call this at the very beginning of your app
-inject_ga()
 
 # set the theme configuration
 st.set_page_config(
@@ -40,6 +22,20 @@ hide_streamlit_style = """
     </style>
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
+# Inject Google Analytics
+GA_ID = "G-CMZYYS73E2"
+ga_js = f"""
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={GA_ID}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){{dataLayer.push(arguments);}}
+  gtag('js', new Date());
+  gtag('config', '{GA_ID}');
+</script>
+"""
+st.markdown(ga_js, unsafe_allow_html=True)
 
 # Define the model version
 model_version = '1.0'  # You can change this as needed
