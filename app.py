@@ -4,10 +4,28 @@ import joblib
 import os
 from model import predict, predict_proba  # Ensure these functions handle DataFrame input
 import streamlit.components.v1 as components
-import streamlit_analytics
+
 
 # Start tracking
-with streamlit_analytics.track():
+with def inject_ga():
+    GA_ID = "G-CMZYYS73E2"
+    
+    GA_JS = """
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '{}');
+    </script>
+    """.format(GA_ID, GA_ID)
+    
+    st.markdown(GA_JS, unsafe_allow_html=True)
+
+# Call the function to inject the GA script
+inject_ga()
+
     # set the theme configuration
     st.set_page_config(
         page_title="Employee Attrition Prediction",
