@@ -5,6 +5,8 @@ import os
 from model import predict, predict_proba  # Ensure these functions handle DataFrame input
 import streamlit.components.v1 as components
 
+# Call this function at the very beginning of your app
+inject_plausible()
 # set the theme configuration
 st.set_page_config(
     page_title="Employee Attrition Prediction",
@@ -30,8 +32,6 @@ def inject_plausible():
     """
     components.html(plausible_script, height=0)
 
-# Call this function at the very beginning of your app
-inject_plausible()
 
 # Function to track prediction click
 def track_prediction_click():
