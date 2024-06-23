@@ -146,7 +146,8 @@ with st.form("attrition_form"):
 if submit_button:
     errors = []
     
-    # Check for specific validation rules 
+    # Check for specific validation rules
+    if st.button("Predict Attrition", on_click=lambda: components.html("trackPredictionClick()")):   
     if age < 18 or age > 70:
         errors.append("Age must be between 18 and 70.")
     if distance_from_home < 0:
