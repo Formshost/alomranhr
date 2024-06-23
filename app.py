@@ -191,8 +191,7 @@ if submit_button:
         })
 
         # Display a spinner while the model is making predictions
-        if st.button("Predict Attrition"):
-            track_prediction_click()
+        with st.spinner('Making prediction...'):
             # Make predictions
             predictions = model.predict(input_data)
             probabilities = model.predict_proba(input_data)[:, 1]
