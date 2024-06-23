@@ -22,20 +22,17 @@ hide_streamlit_style = """
     </style>
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+#javaScript snippet for Plausible analysis 
+def inject_plausible():
+    plausible_script = """
+    <script defer data-domain="alomranhr.streamlit.app" src="https://plausible.io/js/script.js"></script>
+    """
+    components.html(plausible_script, height=0)
 
-# Inject Google Analytics
-GA_ID = "G-CMZYYS73E2"
-ga_js = f"""
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id={GA_ID}"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){{dataLayer.push(arguments);}}
-  gtag('js', new Date());
-  gtag('config', '{GA_ID}');
-</script>
-"""
-st.markdown(ga_js, unsafe_allow_html=True)
+# Call this function at the very beginning of your app
+inject_plausible()
+
+
 
 # Define the model version
 model_version = '1.0'  # You can change this as needed
