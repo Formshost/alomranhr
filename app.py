@@ -165,7 +165,6 @@ if submit_button:
         errors.append("Years since last promotion cannot be negative.")
     if years_with_curr_manager < 0:
         errors.append("Years with current manager cannot be negative.")
-    if st.button("Predict Attrition", on_click=lambda: components.html("trackPredictionClick()")):   
 
     if errors:
         for error in errors:
