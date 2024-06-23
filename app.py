@@ -154,11 +154,10 @@ with st.form("attrition_form"):
     
 
 
-# Handling form submission
+# Handling submission form
 if submit_button:
     track_prediction_click()  # Track the prediction click
     errors = []
-    
     # Check for specific validation rules
     if age < 18 or age > 70:
         errors.append("Age must be between 18 and 70.")
@@ -183,6 +182,7 @@ if submit_button:
         for error in errors:
             st.error(error)
     else:
+
 
         # Create a DataFrame to hold the user input data
         input_data = pd.DataFrame({
