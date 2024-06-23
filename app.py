@@ -27,12 +27,12 @@ def inject_ga():
 inject_ga()
 
 
-    # set the theme configuration
-    st.set_page_config(
-        page_title="Employee Attrition Prediction",
-        page_icon="🧑‍💼",
-        layout="centered",
-        initial_sidebar_state="expanded",
+# set the theme configuration
+st.set_page_config(
+    page_title="Employee Attrition Prediction",
+    page_icon="🧑‍💼",
+    layout="centered",
+    initial_sidebar_state="expanded",
     )
 # Custom CSS to hide the "Fork" button, GitHub icon, and "Hosted with Streamlit" footer
 hide_streamlit_style = """
