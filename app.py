@@ -163,14 +163,7 @@ with st.form("attrition_form"):
 
 # Handling submission form
 if submit_button:
-        st.components.v1.html(
-        """
-        <script>
-        plausible('Predict Attrition');
-        </script>
-        """,
-        height=0
-    )
+    track_prediction_click()  # Track the prediction click
     errors = []
     # Check for specific validation rules
     if age < 18 or age > 70:
