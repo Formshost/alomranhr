@@ -24,6 +24,11 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 def inject_plausible():
     plausible_script = """
     <script defer data-domain="alomranhr.streamlit.app" src="https://plausible.io/js/script.js"></script>
+    <script>
+    function trackPredictionClick() {
+        plausible('Predict Attrition');
+    }
+    </script>
     """
     components.html(plausible_script, height=0)
 
@@ -160,6 +165,7 @@ if submit_button:
         errors.append("Years since last promotion cannot be negative.")
     if years_with_curr_manager < 0:
         errors.append("Years with current manager cannot be negative.")
+    if st.button("Predict Attrition", on_click=lambda: components.html("trackPredictionClick()")):   
 
     if errors:
         for error in errors:
