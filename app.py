@@ -6,26 +6,21 @@ from model import predict, predict_proba  # Ensure these functions handle DataFr
 import streamlit.components.v1 as components
 
 
-# Define the inject_ga function
 def inject_ga():
     GA_ID = "G-CMZYYS73E2"
     
-    GA_JS = """
+    GA_JS = f"""
     <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id={}"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id={GA_ID}"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag(){{dataLayer.push(arguments);}}
         gtag('js', new Date());
-        gtag('config', '{}');
+        gtag('config', '{GA_ID}');
     </script>
-    """.format(GA_ID, GA_ID)
+    """
     
     st.markdown(GA_JS, unsafe_allow_html=True)
-
-# Call the function to inject the GA script
-inject_ga()
-
 
 # set the theme configuration
 st.set_page_config(
