@@ -6,8 +6,8 @@ from model import predict, predict_proba  # Ensure these functions handle DataFr
 import streamlit.components.v1 as components
 
 
-# Start tracking
-with def inject_ga():
+# Define the inject_ga function
+def inject_ga():
     GA_ID = "G-CMZYYS73E2"
     
     GA_JS = """
@@ -25,6 +25,7 @@ with def inject_ga():
 
 # Call the function to inject the GA script
 inject_ga()
+
 
     # set the theme configuration
     st.set_page_config(
