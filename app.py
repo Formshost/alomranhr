@@ -40,13 +40,12 @@ def track_prediction_click():
     components.html(
         """
         <script>
-        trackPredictionClick();
+        plausible('Predict Attrition');
         </script>
         """,
         height=0,
-        width=0,
     )
-
+    
 # Define the model version
 model_version = '1.0'  # You can change this as needed
 
