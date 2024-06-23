@@ -35,7 +35,9 @@ def inject_plausible():
 # Call this function at the very beginning of your app
 inject_plausible()
 
-
+# Function to track prediction click
+def track_prediction_click():
+    components.html("trackPredictionClick()")
 
 # Define the model version
 model_version = '1.0'  # You can change this as needed
@@ -143,11 +145,10 @@ with st.form("attrition_form"):
     submit_button = st.form_submit_button("Predict Attrition")
     
 
-def track_prediction_click():
-    components.html("trackPredictionClick()")
 
 # Handling form submission
 if submit_button:
+    track_prediction_click()  # Track the prediction click
     errors = []
     
     # Check for specific validation rules
