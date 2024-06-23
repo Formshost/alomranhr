@@ -26,9 +26,18 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 #javaScript snippet for Plausible analysis 
 def inject_plausible():
     plausible_script = """
-    <script defer data-domain="alomranhr.streamlit.app" src="https://plausible.io/js/plausible.js"></script>
     <script>
-    window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }
+    (function() {
+        var script = document.createElement('script');
+        script.defer = true;
+        script.setAttribute('data-domain', 'alomranhr.streamlit.app');
+        script.src = 'https://plausible.io/js/script.js';
+        script.onload = function() {
+            console.log('Plausible script loaded');
+            window.plausibleScriptLoaded = true;
+        };
+        document.head.appendChild(script);
+    })();
     </script>
     """
     components.html(plausible_script, height=0)
@@ -40,10 +49,19 @@ def track_prediction_click():
     components.html(
         """
         <script>
-        plausible('Predict Attrition');
+        function attemptTrack() {
+            if (window.plausibleScriptLoaded) {
+                plausible('Predict Attrition');
+                console.log('Plausible event fired: Predict Attrition');
+            } else {
+                console.log('Plausible script not loaded yet, retrying...');
+                setTimeout(attemptTrack, 100);
+            }
+        }
+        attemptTrack();
         </script>
         """,
-        height=0,
+        height=0
     )
     
 # Define the model version
