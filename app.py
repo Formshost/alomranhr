@@ -28,15 +28,15 @@ def inject_plausible():
     plausible_script = """
     <script>
     (function() {
-        var script = document.createElement('script');
-        script.defer = true;
-        script.setAttribute('data-domain', 'alomranhr.streamlit.app');
-        script.src = 'https://plausible.io/js/script.js';
-        script.onload = function() {
-            console.log('Plausible script loaded');
-            window.plausibleScriptLoaded = true;
+        window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) };
+        var d = document, s = d.createElement('script');
+        s.defer = true;
+        s.src = 'https://plausible.io/js/script.js';
+        s.setAttribute('data-domain', 'alomranhr.streamlit.app');
+        d.head.appendChild(s);
+        s.onload = function() {
+            console.log('Plausible script loaded successfully');
         };
-        document.head.appendChild(script);
     })();
     </script>
     """
@@ -49,16 +49,23 @@ def track_prediction_click():
     components.html(
         """
         <script>
-        function attemptTrack() {
-            if (window.plausibleScriptLoaded) {
-                plausible('Predict Attrition');
-                console.log('Plausible event fired: Predict Attrition');
-            } else {
-                console.log('Plausible script not loaded yet, retrying...');
-                setTimeout(attemptTrack, 100);
+        (function() {
+            var attempts = 0;
+            var maxAttempts = 50;  // 5 seconds maximum wait time
+            function attemptTrack() {
+                if (typeof window.plausible === 'function') {
+                    window.plausible('Predict Attrition');
+                    console.log('Plausible event fired: Predict Attrition');
+                } else if (attempts < maxAttempts) {
+                    attempts++;
+                    console.log('Waiting for Plausible to load... Attempt ' + attempts);
+                    setTimeout(attemptTrack, 100);
+                } else {
+                    console.error('Failed to load Plausible after ' + maxAttempts + ' attempts');
+                }
             }
-        }
-        attemptTrack();
+            attemptTrack();
+        })();
         </script>
         """,
         height=0
