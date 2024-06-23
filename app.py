@@ -140,8 +140,11 @@ with st.form("attrition_form"):
     st.markdown("Years With Current Manager / عدد السنوات مع المدير الحالي")
     years_with_curr_manager = st.number_input("", min_value=0, key='years_with_curr_manager', help="Enter the number of years with the current manager.")
 
+def track_prediction_click():
+    components.html("trackPredictionClick()")
     submit_button = st.form_submit_button("Predict Attrition")
-     if st.button("Predict Attrition", on_click=lambda: components.html("trackPredictionClick()")):   
+        track_prediction_click()
+
 
 # Handling form submission
 if submit_button:
