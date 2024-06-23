@@ -32,7 +32,8 @@ def inject_plausible():
     </script>
     """
     components.html(plausible_script, height=0)
-
+# Call this function at the very beginning of your app
+inject_plausible()
 
 # Function to track prediction click
 def track_prediction_click():
