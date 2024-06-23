@@ -141,7 +141,7 @@ with st.form("attrition_form"):
     years_with_curr_manager = st.number_input("", min_value=0, key='years_with_curr_manager', help="Enter the number of years with the current manager.")
     
     submit_button = st.form_submit_button("Predict Attrition")
-        track_prediction_click()
+     track_prediction_click()
 
 def track_prediction_click():
     components.html("trackPredictionClick()")
