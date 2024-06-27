@@ -25,7 +25,6 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 #javaScript snippet for Plausible analysis 
 def inject_plausible():
-def inject_plausible():
     st.components.v1.html(
         """
         <script defer data-domain="alomranhr.streamlit.app" src="https://plausible.io/js/script.js"></script>
