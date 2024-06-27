@@ -37,6 +37,7 @@ def inject_plausible():
 # Call this function at the very beginning of your app
 inject_plausible()
 add_plausible_listener()
+
 def add_plausible_listener():
     st.components.v1.html(
         """
