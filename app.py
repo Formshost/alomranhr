@@ -206,9 +206,7 @@ if submit_button:
         # Display the probability
         st.subheader(f"Probability: {probability:.2%}")
         st.progress(probability)
-
-                # Track that results were viewed
-# After displaying prediction results
+        # After displaying prediction results
 st.components.v1.html(
     """
     <script>
@@ -222,6 +220,7 @@ st.components.v1.html(
     """,
     height=0
 )
+
 
         # Add a button to toggle the detailed explanation
         if st.button("Show Explanation"):
