@@ -25,16 +25,13 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 #javaScript snippet for Plausible analysis 
 def inject_plausible():
+def inject_plausible():
     st.components.v1.html(
         """
-        <script defer data-domain="alomranhr.streamlit.app" src="https://plausible.io/js/script.outbound-links.js"></script>
-        <script>
-        window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }
-        </script>
+        <script defer data-domain="alomranhr.streamlit.app" src="https://plausible.io/js/script.js"></script>
         """,
         height=0
     )
-
 
 def add_plausible_listener():
     st.components.v1.html(
