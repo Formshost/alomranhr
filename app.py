@@ -25,47 +25,30 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 #javaScript snippet for Plausible analysis 
 def inject_plausible():
-    plausible_script = """
-    <script>
-    (function() {
-        window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) };
-        var d = document, s = d.createElement('script');
-        s.defer = true;
-        s.src = 'https://plausible.io/js/script.js';
-        s.setAttribute('data-domain', 'alomranhr.streamlit.app');
-        d.head.appendChild(s);
-        s.onload = function() {
-            console.log('Plausible script loaded successfully');
-        };
-    })();
-    </script>
-    """
-    components.html(plausible_script, height=0)
+    st.components.v1.html(
+        """
+        <script defer data-domain="alomranhr.streamlit.app" src="https://plausible.io/js/script.outbound-links.js"></script>
+        <script>
+        window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }
+        </script>
+        """,
+        height=0
+    )
 # Call this function at the very beginning of your app
 inject_plausible()
-
-# Function to track prediction click
-def track_prediction_click():
-    components.html(
+add_plausible_listener()
+def add_plausible_listener():
+    st.components.v1.html(
         """
         <script>
-        (function() {
-            var attempts = 0;
-            var maxAttempts = 50;  // 5 seconds maximum wait time
-            function attemptTrack() {
-                if (typeof window.plausible === 'function') {
-                    window.plausible('Predict Attrition');
-                    console.log('Plausible event fired: Predict Attrition');
-                } else if (attempts < maxAttempts) {
-                    attempts++;
-                    console.log('Waiting for Plausible to load... Attempt ' + attempts);
-                    setTimeout(attemptTrack, 100);
-                } else {
-                    console.error('Failed to load Plausible after ' + maxAttempts + ' attempts');
-                }
+        document.addEventListener('predict-attrition', function() {
+            if (typeof plausible === 'function') {
+                plausible('Predict Attrition');
+                console.log('Plausible event tracked: Predict Attrition');
+            } else {
+                console.error('Plausible function not available');
             }
-            attemptTrack();
-        })();
+        });
         </script>
         """,
         height=0
@@ -180,7 +163,14 @@ with st.form("attrition_form"):
 
 # Handling submission form
 if submit_button:
-    track_prediction_click()  # Track the prediction click
+    st.components.v1.html(
+        """
+        <script>
+        document.dispatchEvent(new Event('predict-attrition'));
+        </script>
+        """,
+        height=0
+    )
     errors = []
     # Check for specific validation rules
     if age < 18 or age > 70:
