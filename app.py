@@ -32,26 +32,10 @@ def inject_plausible():
         height=0
     )
 
-def add_plausible_listener():
-    st.components.v1.html(
-        """
-        <script>
-        document.addEventListener('predict-attrition', function() {
-            if (typeof plausible === 'function') {
-                plausible('Predict Attrition');
-                console.log('Plausible event tracked: Predict Attrition');
-            } else {
-                console.error('Plausible function not available');
-            }
-        });
-        </script>
-        """,
-        height=0
-    )
 
 # Call this function at the very beginning of your app
 inject_plausible()
-add_plausible_listener()
+
     
 # Define the model version
 model_version = '1.0'  # You can change this as needed
@@ -162,14 +146,6 @@ with st.form("attrition_form"):
 
 # Handling submission form
 if submit_button:
-    st.components.v1.html(
-        """
-        <script>
-        document.dispatchEvent(new Event('predict-attrition'));
-        </script>
-        """,
-        height=0
-    )
     errors = []
     # Check for specific validation rules
     if age < 18 or age > 70:
@@ -230,6 +206,16 @@ if submit_button:
         # Display the probability
         st.subheader(f"Probability: {probability:.2%}")
         st.progress(probability)
+
+                # Track that results were viewed
+        st.components.v1.html(
+            """
+            <script>
+            plausible('Prediction Results Viewed');
+            </script>
+            """,
+            height=0
+        )
 
         # Add a button to toggle the detailed explanation
         if st.button("Show Explanation"):
