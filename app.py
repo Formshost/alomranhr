@@ -206,21 +206,6 @@ if submit_button:
         # Display the probability
         st.subheader(f"Probability: {probability:.2%}")
         st.progress(probability)
-        # After displaying prediction results
-st.components.v1.html(
-    """
-    <script>
-    if(window.plausible) {
-        plausible('Prediction Results Viewed');
-        console.log('Plausible event triggered: Prediction Results Viewed');
-    } else {
-        console.error('Plausible not loaded');
-    }
-    </script>
-    """,
-    height=0
-)
-
 
         # Add a button to toggle the detailed explanation
         if st.button("Show Explanation"):
