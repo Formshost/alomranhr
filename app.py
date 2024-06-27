@@ -34,9 +34,7 @@ def inject_plausible():
         """,
         height=0
     )
-# Call this function at the very beginning of your app
-inject_plausible()
-add_plausible_listener()
+
 
 def add_plausible_listener():
     st.components.v1.html(
@@ -54,6 +52,10 @@ def add_plausible_listener():
         """,
         height=0
     )
+
+# Call this function at the very beginning of your app
+inject_plausible()
+add_plausible_listener()
     
 # Define the model version
 model_version = '1.0'  # You can change this as needed
