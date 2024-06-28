@@ -25,30 +25,31 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 #javaScript snippet for Plausible analysis 
 def inject_plausible():
-    st.components.v1.html(
-        """
-        <script defer data-domain="alomranhr.streamlit.app" src="https://plausible.io/js/script.js"></script>
-        """,
-        height=0
-    )
+    plausible_script = """
+    <script>
+    (function(w,d,s,o,f,js,fjs){
+        w[o]=w[o]||function(){(w[o].q=w[o].q||[]).push(arguments)};
+        js=d.createElement(s),fjs=d.getElementsByTagName(s)[0];
+        js.async=1;js.src=f;fjs.parentNode.insertBefore(js,fjs);
+    }(window,document,'script','plausible','https://plausible.io/js/script.js'));
+
+    plausible('pageview');
+    </script>
+    """
+    st.components.v1.html(plausible_script, height=0)
 # Function for server-side tracking (alternative to client-side)
 def track_prediction_view():
-    try:
-        requests.post(
-            'https://plausible.io/api/event',
-            json={
-                'domain': 'alomranhr.streamlit.app',
-                'name': 'Prediction Results Viewed',
-                'url': 'https://alomranhr.streamlit.app'
-            },
-            headers={
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-                'X-Forwarded-For': '127.0.0.1'  # Replace with actual IP if possible
-            }
-        )
-        print("Server-side tracking event sent successfully")
-    except Exception as e:
-        print(f"Error sending server-side tracking event: {e}")
+    tracking_script = """
+    <script>
+    if (typeof plausible === 'function') {
+        plausible('Prediction Results Viewed');
+        console.log('Plausible event tracked: Prediction Results Viewed');
+    } else {
+        console.error('Plausible function not available');
+    }
+    </script>
+    """
+    st.components.v1.html(tracking_script, height=0)
 
 # Call this function at the very beginning of your app
 inject_plausible()
@@ -224,20 +225,8 @@ if submit_button:
         st.subheader(f"Probability: {probability:.2%}")
         st.progress(probability)
 
-        # Track that results were viewed (client-side)
-        st.components.v1.html(
-            """
-            <script>
-            if(window.plausible) {
-                plausible('Prediction Results Viewed');
-                console.log('Plausible event triggered: Prediction Results Viewed');
-            } else {
-                console.error('Plausible not loaded');
-            }
-            </script>
-            """,
-            height=0
-        )
+    # After displaying results
+    track_prediction_view()
 
         # Add a button to toggle the detailed explanation
         if st.button("Show Explanation"):
