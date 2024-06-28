@@ -27,14 +27,9 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 #javaScript snippet for Plausible analysis 
 def inject_plausible():
     plausible_script = """
+    <script src="https://plausible.io/js/script.js" defer data-domain="alomranhr.streamlit.app"></script>
     <script>
-    (function(w,d,s,o,f,js,fjs){
-        w[o]=w[o]||function(){(w[o].q=w[o].q||[]).push(arguments)};
-        js=d.createElement(s),fjs=d.getElementsByTagName(s)[0];
-        js.async=1;js.src=f;fjs.parentNode.insertBefore(js,fjs);
-    }(window,document,'script','plausible','https://plausible.io/js/script.js'));
-
-    plausible('pageview');
+        window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }
     </script>
     """
     st.components.v1.html(plausible_script, height=0)
@@ -42,18 +37,31 @@ def inject_plausible():
 def track_prediction_view():
     tracking_script = """
     <script>
-    if (typeof plausible === 'function') {
-        plausible('Prediction Results Viewed');
-        console.log('Plausible event tracked: Prediction Results Viewed');
-    } else {
-        console.error('Plausible function not available');
-    }
+    (function() {
+        var attempts = 0;
+        var maxAttempts = 10;
+        function tryTrackEvent() {
+            if (typeof plausible === 'function') {
+                plausible('Prediction Results Viewed');
+                console.log('Plausible event tracked: Prediction Results Viewed');
+            } else if (attempts < maxAttempts) {
+                attempts++;
+                console.log('Plausible not available, retrying... Attempt: ' + attempts);
+                setTimeout(tryTrackEvent, 1000);
+            } else {
+                console.error('Failed to track event: Plausible not available after ' + maxAttempts + ' attempts');
+            }
+        }
+        tryTrackEvent();
+    })();
     </script>
     """
     st.components.v1.html(tracking_script, height=0)
 
 # Call this function at the very beginning of your app
 inject_plausible()
+
+st.write("Debug: Plausible script injected")
 
     
 # Define the model version
@@ -226,8 +234,10 @@ if submit_button:
         st.subheader(f"Probability: {probability:.2%}")
         st.progress(probability)
 
-        # After displaying results
+        # Track that results were viewed
         track_prediction_view()
+        st.write("Debug: Prediction view tracked")
+
 
         # Add a button to toggle the detailed explanation
         if st.button("Show Explanation"):
