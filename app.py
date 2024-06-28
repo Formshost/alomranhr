@@ -225,8 +225,8 @@ if submit_button:
         st.subheader(f"Probability: {probability:.2%}")
         st.progress(probability)
 
-    # After displaying results
-    track_prediction_view()
+        # After displaying results
+        track_prediction_view()
 
         # Add a button to toggle the detailed explanation
         if st.button("Show Explanation"):
