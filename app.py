@@ -31,7 +31,24 @@ def inject_plausible():
         """,
         height=0
     )
-
+# Function for server-side tracking (alternative to client-side)
+def track_prediction_view():
+    try:
+        requests.post(
+            'https://plausible.io/api/event',
+            json={
+                'domain': 'alomranhr.streamlit.app',
+                'name': 'Prediction Results Viewed',
+                'url': 'https://alomranhr.streamlit.app'
+            },
+            headers={
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+                'X-Forwarded-For': '127.0.0.1'  # Replace with actual IP if possible
+            }
+        )
+        print("Server-side tracking event sent successfully")
+    except Exception as e:
+        print(f"Error sending server-side tracking event: {e}")
 
 # Call this function at the very beginning of your app
 inject_plausible()
