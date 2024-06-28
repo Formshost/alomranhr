@@ -27,9 +27,16 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 #javaScript snippet for Plausible analysis 
 def inject_plausible():
     plausible_script = """
-    <script src="https://plausible.io/js/script.js" defer data-domain="alomranhr.streamlit.app"></script>
+    <script defer data-domain="alomranhr.streamlit.app" src="https://plausible.io/js/plausible.js"></script>
     <script>
-        window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }
+    document.addEventListener('prediction-viewed', function() {
+        if (typeof plausible === 'function') {
+            plausible('Prediction Results Viewed');
+            console.log('Plausible event tracked: Prediction Results Viewed');
+        } else {
+            console.error('Plausible function not available');
+        }
+    });
     </script>
     """
     st.components.v1.html(plausible_script, height=0)
@@ -38,21 +45,9 @@ def track_prediction_view():
     tracking_script = """
     <script>
     (function() {
-        var attempts = 0;
-        var maxAttempts = 10;
-        function tryTrackEvent() {
-            if (typeof plausible === 'function') {
-                plausible('Prediction Results Viewed');
-                console.log('Plausible event tracked: Prediction Results Viewed');
-            } else if (attempts < maxAttempts) {
-                attempts++;
-                console.log('Plausible not available, retrying... Attempt: ' + attempts);
-                setTimeout(tryTrackEvent, 1000);
-            } else {
-                console.error('Failed to track event: Plausible not available after ' + maxAttempts + ' attempts');
-            }
-        }
-        tryTrackEvent();
+        var event = new Event('prediction-viewed');
+        document.dispatchEvent(event);
+        console.log('Custom event dispatched: prediction-viewed');
     })();
     </script>
     """
@@ -236,7 +231,7 @@ if submit_button:
 
         # Track that results were viewed
         track_prediction_view()
-        st.write("Debug: Prediction view tracked")
+        st.write("Debug: Custom event dispatched")
 
 
         # Add a button to toggle the detailed explanation
