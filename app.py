@@ -4,6 +4,7 @@ import joblib
 import os
 from model import predict, predict_proba  # Ensure these functions handle DataFrame input
 import streamlit.components.v1 as components
+import requests
 
 
 # set the theme configuration
