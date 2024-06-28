@@ -5,6 +5,7 @@ import os
 from model import predict, predict_proba  # Ensure these functions handle DataFrame input
 import streamlit.components.v1 as components
 import requests
+from urllib.parse import urlparse
 
 
 # set the theme configuration
@@ -25,38 +26,26 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 
 #javaScript snippet for Plausible analysis 
-def inject_plausible():
-    plausible_script = """
-    <script defer data-domain="alomranhr.streamlit.app" src="https://plausible.io/js/plausible.js"></script>
-    <script>
-    document.addEventListener('prediction-viewed', function() {
-        if (typeof plausible === 'function') {
-            plausible('Prediction Results Viewed');
-            console.log('Plausible event tracked: Prediction Results Viewed');
-        } else {
-            console.error('Plausible function not available');
-        }
-    });
-    </script>
-    """
-    st.components.v1.html(plausible_script, height=0)
-# Function for server-side tracking (alternative to client-side)
-def track_prediction_view():
-    tracking_script = """
-    <script>
-    (function() {
-        var event = new Event('prediction-viewed');
-        document.dispatchEvent(event);
-        console.log('Custom event dispatched: prediction-viewed');
-    })();
-    </script>
-    """
-    st.components.v1.html(tracking_script, height=0)
+def track_event(event_name):
+    try:
+        domain = urlparse(st.get_option("server.baseUrlPath")).netloc or "alomranhr.streamlit.app"
+        requests.post(
+            'https://plausible.io/api/event',
+            json={
+                'domain': domain,
+                'name': event_name,
+                'url': f'https://{domain}',
+            },
+            headers={
+                'User-Agent': 'Streamlit App',
+                'X-Forwarded-For': '127.0.0.1'
+            }
+        )
+        st.write(f"Debug: Event '{event_name}' tracked")
+    except Exception as e:
+        st.write(f"Debug: Failed to track event. Error: {str(e)}")
 
-# Call this function at the very beginning of your app
-inject_plausible()
 
-st.write("Debug: Plausible script injected")
 
     
 # Define the model version
@@ -230,8 +219,7 @@ if submit_button:
         st.progress(probability)
 
         # Track that results were viewed
-        track_prediction_view()
-        st.write("Debug: Custom event dispatched")
+        track_event('Prediction Results Viewed')
 
 
         # Add a button to toggle the detailed explanation
