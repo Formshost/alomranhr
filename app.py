@@ -29,7 +29,7 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 def track_event(event_name):
     try:
         domain = urlparse(st.get_option("server.baseUrlPath")).netloc or "alomranhr.streamlit.app"
-        requests.post(
+        response = requests.post(
             'https://plausible.io/api/event',
             json={
                 'domain': domain,
@@ -41,12 +41,12 @@ def track_event(event_name):
                 'X-Forwarded-For': '127.0.0.1'
             }
         )
-        st.write(f"Debug: Event '{event_name}' tracked")
+        # Instead of displaying to the user, we'll just print to the console
+        # This will be visible in your logs, but not to the end-user
+        print(f"Event '{event_name}' tracked. Status: {response.status_code}")
     except Exception as e:
-        st.write(f"Debug: Failed to track event. Error: {str(e)}")
-
-
-
+        # Log the error to the console instead of displaying it
+        print(f"Failed to track event. Error: {str(e)}")
     
 # Define the model version
 model_version = '1.0'  # You can change this as needed
@@ -218,7 +218,7 @@ if submit_button:
         st.subheader(f"Probability: {probability:.2%}")
         st.progress(probability)
 
-        # Track that results were viewed
+        # After displaying prediction results
         track_event('Prediction Results Viewed')
 
 
